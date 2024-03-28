@@ -26,7 +26,7 @@ class UnitTest {
         unit = Unit(prefix = 200_000.2.toBigDecimal(), kg=1, m=1, s=-2)
         Assert.assertTrue(unit.baseUnitComposition == listOf(1,-2,1,0,0,0,0))
         Assert.assertTrue(!unit.coherent && unit.prefix == 200_000.2.toBigDecimal())
-        Assert.assertTrue(unit.toString() == "m*s^-2*kg")
+        Assert.assertTrue(unit.toString() == "200000.2*m*s^-2*kg")
         Assert.assertTrue(unit.toString() == unit.fullForm)
     }
 

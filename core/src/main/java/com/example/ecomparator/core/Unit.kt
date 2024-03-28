@@ -3,7 +3,7 @@ package com.example.ecomparator.core
 import java.lang.IllegalStateException
 import java.math.BigDecimal
 
-val baseUnitOrder = listOf("m","s","kg","A","K","mol","cd")
+val orderedBaseUnits = listOf("m","s","kg","A","K","mol","cd")
 
 class Unit(
     val m: Int = 0,
@@ -41,7 +41,7 @@ class Unit(
     val baseUnit = coherent && baseUnitComposition.filter{it == 1}.size == 1
 
     override fun toString(): String {
-        return baseUnitOrder
+        return orderedBaseUnits
             .map { it to baseUnitExponents[it] }
             .map {
                 when (it.second) {
@@ -53,6 +53,12 @@ class Unit(
             }
             .filter {it != ""}
             .joinToString("*")
+            .let {
+                if(prefix == 1.toBigDecimal())
+                    it
+                else
+                    prefix.toString() + "*" +it
+            }
     }
     val fullForm = if(toString()=="") "1" else toString()
 }
