@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Entity Comparator"
 include(":app")
+include(":core")
