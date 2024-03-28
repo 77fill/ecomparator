@@ -29,4 +29,29 @@ class UnitTest {
         Assert.assertTrue(unit.toString() == "m*s^-2*kg")
         Assert.assertTrue(unit.toString() == unit.fullForm)
     }
+
+    private fun check_base_unit(unit: Unit): Boolean {
+        return unit.let {
+            it.baseUnit
+                    && it.coherent
+                    && it.prefix == 1.toBigDecimal()
+        }
+    }
+    @Test
+    fun check_base_units() {
+        Assert.assertTrue(
+            listOf(
+                Unit.METER, Unit.SECOND, Unit.KILOGRAM,
+                Unit.AMPERE, Unit.KELVIN, Unit.MOLE, Unit.CANDELA
+            )
+                .all { check_base_unit(it) }
+        )
+        Assert.assertTrue(Unit.METER.baseUnitComposition == listOf(1,0,0,0,0,0,0))
+        Assert.assertTrue(Unit.SECOND.baseUnitComposition == listOf(0,1,0,0,0,0,0))
+        Assert.assertTrue(Unit.KILOGRAM.baseUnitComposition == listOf(0,0,1,0,0,0,0))
+        Assert.assertTrue(Unit.AMPERE.baseUnitComposition == listOf(0,0,0,1,0,0,0))
+        Assert.assertTrue(Unit.KELVIN.baseUnitComposition == listOf(0,0,0,0,1,0,0))
+        Assert.assertTrue(Unit.MOLE.baseUnitComposition == listOf(0,0,0,0,0,1,0))
+        Assert.assertTrue(Unit.CANDELA.baseUnitComposition == listOf(0,0,0,0,0,0,1))
+    }
 }

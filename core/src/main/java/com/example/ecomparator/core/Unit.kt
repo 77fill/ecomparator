@@ -26,11 +26,19 @@ class Unit(
     )
 
     companion object {
-
+        val METER = Unit(m=1)
+        val METRE = METER
+        val SECOND = Unit(s=1)
+        val KILOGRAM = Unit(kg=1)
+        val AMPERE = Unit(A=1)
+        val KELVIN = Unit(K=1)
+        val MOLE = Unit(mol=1)
+        val CANDELA = Unit(cd=1)
     }
 
     val baseUnitComposition = listOf(m,s,kg,A,K,mol,cd)
     val coherent = prefix == 1.toBigDecimal()
+    val baseUnit = coherent && baseUnitComposition.filter{it == 1}.size == 1
 
     override fun toString(): String {
         return baseUnitOrder
