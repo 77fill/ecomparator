@@ -13,7 +13,8 @@ class Unit(
     val K: Int = 0,
     val mol: Int = 0,
     val cd: Int = 0,
-    val prefix: BigDecimal = 1.toBigDecimal()
+    val prefix: BigDecimal = 1.toBigDecimal(),
+    val name: String = ""
 ) {
     val baseUnitExponents = mapOf(
         "m" to m,
@@ -26,14 +27,14 @@ class Unit(
     )
 
     companion object {
-        val METER = Unit(m=1)
+        val METER = Unit(m=1, name = "Metre")
         val METRE = METER
-        val SECOND = Unit(s=1)
-        val KILOGRAM = Unit(kg=1)
-        val AMPERE = Unit(A=1)
-        val KELVIN = Unit(K=1)
-        val MOLE = Unit(mol=1)
-        val CANDELA = Unit(cd=1)
+        val SECOND = Unit(s=1, name = "Second")
+        val KILOGRAM = Unit(kg=1, name = "Kilogram")
+        val AMPERE = Unit(A=1, name = "Ampere")
+        val KELVIN = Unit(K=1, name = "Kelvin")
+        val MOLE = Unit(mol=1, name = "Mole")
+        val CANDELA = Unit(cd=1, name = "Candela")
     }
 
     val baseUnitComposition = listOf(m,s,kg,A,K,mol,cd)

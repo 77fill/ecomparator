@@ -3,7 +3,7 @@ package com.example.ecomparator.core
 import org.junit.Assert
 import org.junit.Test
 
-class UnitTest {
+class UnitTestSimple {
     @Test
     fun empty_unit_is_1() {
         val unit = Unit()
@@ -53,5 +53,16 @@ class UnitTest {
         Assert.assertTrue(Unit.KELVIN.baseUnitComposition == listOf(0,0,0,0,1,0,0))
         Assert.assertTrue(Unit.MOLE.baseUnitComposition == listOf(0,0,0,0,0,1,0))
         Assert.assertTrue(Unit.CANDELA.baseUnitComposition == listOf(0,0,0,0,0,0,1))
+    }
+
+    @Test
+    fun check_base_unit_names() {
+        Assert.assertTrue(Unit.METER.name == "Metre")
+        Assert.assertTrue(Unit.SECOND.name == "Second")
+        Assert.assertTrue(Unit.KILOGRAM.name == "Kilogram")
+        Assert.assertTrue(Unit.AMPERE.name == "Ampere")
+        Assert.assertTrue(Unit.KELVIN.name == "Kelvin")
+        Assert.assertTrue(Unit.MOLE.name == "Mole")
+        Assert.assertTrue(Unit.CANDELA.name == "Candela")
     }
 }
