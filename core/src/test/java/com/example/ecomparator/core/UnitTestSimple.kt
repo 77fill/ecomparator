@@ -8,7 +8,7 @@ class UnitTestSimple {
     fun empty_unit_is_1() {
         val unit = Unit()
         Assert.assertTrue(unit.baseUnitComposition == listOf(0,0,0,0,0,0,0))
-        Assert.assertTrue(unit.coherent && unit.prefix == 1.toBigDecimal())
+        Assert.assertTrue(unit.coherent && unit.numericMultiplier == 1.toBigDecimal())
         Assert.assertTrue(unit.toString() == "")
         Assert.assertTrue(unit.fullForm == "1")
     }
@@ -19,13 +19,13 @@ class UnitTestSimple {
 
         unit = Unit(s=1,m=-2,K=2)
         Assert.assertTrue(unit.baseUnitComposition == listOf(-2,1,0,0,2,0,0))
-        Assert.assertTrue(unit.coherent && unit.prefix == 1.toBigDecimal())
+        Assert.assertTrue(unit.coherent && unit.numericMultiplier == 1.toBigDecimal())
         Assert.assertTrue(unit.toString() == "m^-2*s*K^2")
         Assert.assertTrue(unit.toString() == unit.fullForm)
 
-        unit = Unit(prefix = 200_000.2.toBigDecimal(), kg=1, m=1, s=-2)
+        unit = Unit(numericMultiplier = 200_000.2.toBigDecimal(), kg=1, m=1, s=-2)
         Assert.assertTrue(unit.baseUnitComposition == listOf(1,-2,1,0,0,0,0))
-        Assert.assertTrue(!unit.coherent && unit.prefix == 200_000.2.toBigDecimal())
+        Assert.assertTrue(!unit.coherent && unit.numericMultiplier == 200_000.2.toBigDecimal())
         Assert.assertTrue(unit.toString() == "200000.2*m*s^-2*kg")
         Assert.assertTrue(unit.toString() == unit.fullForm)
     }
@@ -34,7 +34,7 @@ class UnitTestSimple {
         return unit.let {
             it.baseUnit
                     && it.coherent
-                    && it.prefix == 1.toBigDecimal()
+                    && it.numericMultiplier == 1.toBigDecimal()
         }
     }
     @Test
@@ -64,5 +64,49 @@ class UnitTestSimple {
         Assert.assertTrue(Unit.KELVIN.name == "Kelvin")
         Assert.assertTrue(Unit.MOLE.name == "Mole")
         Assert.assertTrue(Unit.CANDELA.name == "Candela")
+    }
+
+    private fun check_special_derived_unit(unit: Unit): Boolean {
+        return !unit.baseUnit
+                && unit.coherent
+                && unit.numericMultiplier == 1.toBigDecimal()
+    }
+
+    @Test
+    fun check_special_derived_units() {
+        Assert.assertTrue(Unit.SPECIAL.RADIAN.baseUnitComposition == listOf(0,0,0,0,0,0,0))
+        Assert.assertTrue(Unit.SPECIAL.STERADIAN.baseUnitComposition == listOf(0,0,0,0,0,0,0))
+        Assert.assertTrue(Unit.SPECIAL.HERTZ.baseUnitComposition == listOf(0,-1,0,0,0,0,0))
+        Assert.assertTrue(Unit.SPECIAL.NEWTON.baseUnitComposition == listOf(1,-2,1,0,0,0,0))
+        Assert.assertTrue(Unit.SPECIAL.PASCAL.baseUnitComposition == listOf(-1,-2,1,0,0,0,0))
+        Assert.assertTrue(Unit.SPECIAL.JOULE.baseUnitComposition == listOf(2,-2,1,0,0,0,0))
+        Assert.assertTrue(Unit.SPECIAL.WATT.baseUnitComposition == listOf(2,-3,1,0,0,0,0))
+        Assert.assertTrue(Unit.SPECIAL.COULOMB.baseUnitComposition == listOf(0,1,0,0,1,0,0))
+        Assert.assertTrue(Unit.SPECIAL.VOLT.baseUnitComposition == listOf(2,-3,1,0,-1,0,0))
+        Assert.assertTrue(Unit.SPECIAL.FARAD.baseUnitComposition == listOf(-2,4,-1,0,2,0,0))
+        Assert.assertTrue(Unit.SPECIAL.OHM.baseUnitComposition == listOf(2,-3,1,0,-2,0,0))
+        Assert.assertTrue(Unit.SPECIAL.SIEMENS.baseUnitComposition == listOf(-2,3,-1,0,2,0,0))
+        Assert.assertTrue(Unit.SPECIAL.WEBER.baseUnitComposition == listOf(2,-2,1,0,-1,0,0))
+        Assert.assertTrue(Unit.SPECIAL.TESLA.baseUnitComposition == listOf(0,-2,1,0,-1,0,0))
+        Assert.assertTrue(Unit.SPECIAL.HENRY.baseUnitComposition == listOf(2,-2,1,0,-2,0,0))
+        Assert.assertTrue(Unit.SPECIAL.DEGREE_CELSIUS.baseUnitComposition == listOf(0,0,0,1,0,0,0))
+        Assert.assertTrue(Unit.SPECIAL.LUMEN.baseUnitComposition == listOf(0,0,0,0,0,0,1))
+        Assert.assertTrue(Unit.SPECIAL.LUX.baseUnitComposition == listOf(-2,0,0,0,0,0,1))
+        Assert.assertTrue(Unit.SPECIAL.BECQUEREL.baseUnitComposition == listOf(0,-1,0,0,0,0,0))
+        Assert.assertTrue(Unit.SPECIAL.GRAY.baseUnitComposition == listOf(2,-2,0,0,0,0,0))
+        Assert.assertTrue(Unit.SPECIAL.SIEVERT.baseUnitComposition == listOf(2,-2,0,0,0,0,0))
+        Assert.assertTrue(Unit.SPECIAL.KATAL.baseUnitComposition == listOf(0,-1,0,0,0,1,0))
+    }
+
+    @Test
+    fun check_several_prefixes() {
+        Assert.assertTrue(Unit(prefix = Prefix.KILO, m=1).let {
+            it.baseUnitComposition == listOf(1,0,0,0,0,0,0)
+                    && it.numericMultiplier == 1000.toBigDecimal()
+        })
+        Assert.assertTrue(Unit(prefix = Prefix.MEGA, specialUnit = Unit.SPECIAL.WATT).let {
+            it.baseUnitComposition == listOf(2,-3,1,0,0,0,0)
+                    && it.numericMultiplier == 1000_000.toBigDecimal()
+        })
     }
 }
