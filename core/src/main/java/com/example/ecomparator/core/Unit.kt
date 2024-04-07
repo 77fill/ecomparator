@@ -13,9 +13,19 @@ class Unit(
     val K: Int = 0,
     val mol: Int = 0,
     val cd: Int = 0,
-    val numericMultiplier: BigDecimal = 1.toBigDecimal(),
-    val name: String = ""
+    numericMultiplier: BigDecimal = 1.toBigDecimal(),
+    val prefix: Prefix = Prefix.NONE,
+    val name: String = "",
+    val fixedQuantityTypes: List<QuantityType> = listOf()
 ) {
+    val specifiedNumericMultiplier = numericMultiplier
+    val numericMultiplier: BigDecimal
+        get() =
+            if (specifiedNumericMultiplier == 1.toBigDecimal())
+                prefix.numericMultiplier
+            else
+                specifiedNumericMultiplier
+
     val baseUnitExponents = mapOf(
         "m" to m,
         "s" to s,
@@ -35,15 +45,20 @@ class Unit(
         val KELVIN = Unit(K=1, name = "Kelvin")
         val MOLE = Unit(mol=1, name = "Mole")
         val CANDELA = Unit(cd=1, name = "Candela")
+    }
 
-        val SPECIAL = {
-
-        }
+    object SPECIAL {
+        val RADIAN = Unit(name = "rad", fixedQuantityTypes = listOf(SpecialQuantityType.PLANE_ANGLE))
+        val STERADIAN = Unit(name = "sr", fixedQuantityTypes = listOf(SpecialQuantityType.SOLID_ANGLE))
+        val HERTZ = Unit(name = "Hz", s=-1, fixedQuantityTypes = listOf(SpecialQuantityType.FREQUENCY))
+        val NEWTON = Unit(name = "N", kg=1, m=1, s=-2, fixedQuantityTypes = listOf(SpecialQuantityType.FORCE, SpecialQuantityType.WEIGHT))
+        val WATT = Unit(name = "W", kg=1, m=2, s=-3, fixedQuantityTypes = listOf(SpecialQuantityType.POWER, SpecialQuantityType.RADIANT_FLUX))
     }
 
     val baseUnitComposition = listOf(m,s,kg,A,K,mol,cd)
     val coherent = numericMultiplier == 1.toBigDecimal()
     val baseUnit = coherent && baseUnitComposition.filter{it == 1}.size == 1
+    val isSpecial = fixedQuantityTypes.isNotEmpty()
 
     override fun toString(): String {
         return orderedBaseUnits
@@ -66,4 +81,8 @@ class Unit(
             }
     }
     val fullForm = if(toString()=="") "1" else toString()
+
+    fun withPrefix(prefix: Prefix) : Unit {
+        return Unit(m=this.m,s=this.s,kg=this.kg,A=this.A,K=this.K,mol=this.mol,cd=this.cd, prefix=prefix)
+    }
 }

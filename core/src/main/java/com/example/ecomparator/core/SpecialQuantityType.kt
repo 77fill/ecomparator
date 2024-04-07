@@ -1,0 +1,25 @@
+package com.example.ecomparator.core
+
+object SpecialQuantityType {
+    val PLANE_ANGLE = QuantityType()
+    val SOLID_ANGLE = QuantityType()
+    val FREQUENCY = QuantityType()
+    val FORCE = QuantityType()
+    val WEIGHT = QuantityType()
+    val PRESSURE = QuantityType()
+    val STRESS = QuantityType()
+    val ENERGY = QuantityType()
+    val WORK = QuantityType()
+    val HEAT = QuantityType()
+    val POWER = QuantityType()
+    val RADIANT_FLUX = QuantityType()
+    val ELECTRIC_CHARGE = QuantityType()
+    val ELECTRIC_POTENTIAL = QuantityType()
+    val VOLTAGE = QuantityType()
+    val EMF = QuantityType()
+    val CAPACITANCE = QuantityType()
+    val RESISTANCE = QuantityType()
+    val IMPEDANCE = QuantityType()
+    val REACTANCE = QuantityType()
+    val ELECTRICAL_CONDUCTANCE = QuantityType()
+}
