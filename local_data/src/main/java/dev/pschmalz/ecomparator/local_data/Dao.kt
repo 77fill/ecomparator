@@ -12,5 +12,5 @@ interface Dao {
     @Query("SELECT entity_type_name, quantity_type_name " +
             "FROM entity_type_quantity_type " +
             "WHERE entity_type_name IN (:entityTypeNames)")
-    fun getEntityTypeQuantityTypePair_byEntityTypeName(entityTypeNames: List<String>): Flow<List<EntityTypeQuantityType>>
+    fun getEntityTypeQuantityTypePairs_byEntityTypeNames(entityTypeNames: List<String>): Flow<List<EntityTypeQuantityType>>
 }

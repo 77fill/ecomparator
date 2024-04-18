@@ -10,5 +10,6 @@ java {
 
 dependencies {
     testImplementation(libs.junit)
-    testImplementation("io.mockk:mockk:1.13.10")
+    testImplementation(libs.io.mockk)
+    implementation(libs.jetbrains.kotlinx.coroutines)
 }
