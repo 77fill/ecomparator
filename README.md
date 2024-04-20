@@ -24,5 +24,5 @@ Architecture
 ------------------------------------
 This project's architecture is done in the style of Robert Martin's "Clean Architecture."
 
-[Clean Architecture](readme/architecture.gif)
+![Clean Architecture](readme/architecture.gif "Architecture of this project")
 
