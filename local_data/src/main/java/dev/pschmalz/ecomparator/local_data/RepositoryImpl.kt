@@ -20,7 +20,7 @@ class RepositoryImpl(context: Context) : Repository {
         return dao.getAllEntityTypeNames()
     }
 
-    override fun getQuantityTypeNamesForEntityTypeNames(entityTypes: List<String>): Flow<Map<String, List<String>>> {
+    override fun getQuantityTypeNamesForEntityTypeNames(entityTypes: Flow<List<String>>): Flow<Map<String, List<String>>> {
         return dao.getEntityTypeQuantityTypePairs_byEntityTypeNames(entityTypes)
                 .map {
                     it.groupBy {
