@@ -22,3 +22,7 @@ with all entities having the "power" quantity, whether inside "devices" or not.
 
 Architecture
 ------------------------------------
+This project's architecture is done in the style of Robert Martin's "Clean Architecture."
+
+[Clean Architecture](readme/architecture.gif)
+
