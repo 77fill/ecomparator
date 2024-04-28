@@ -70,4 +70,9 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler)
     ksp(libs.androidx.room.compiler)
+
+    implementation(project(":user_interactor"))
+    implementation(project(":local_data"))
+
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
 }
