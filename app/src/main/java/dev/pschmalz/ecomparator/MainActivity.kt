@@ -3,6 +3,7 @@ package dev.pschmalz.ecomparator
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -24,20 +25,40 @@ import dev.pschmalz.ecomparator.local_data.RepositoryImpl
 import dev.pschmalz.ecomparator.ui.theme.EntityComparatorTheme
 import dev.pschmalz.ecomparator.user_interactor.EntityTypeListing
 import dev.pschmalz.ecomparator.user_interactor.data.EntityType
+import dev.pschmalz.ecomparator.viewmodels.EntityTypeListViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+    lateinit var entityTypeListViewModel : EntityTypeListViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        entityTypeListViewModel = EntityTypeListViewModel()
 
         setContent {
             EntityComparatorTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                    EntityTypeList(entityTypeListViewModel)
                 }
             }
         }
     }
 }
+
+@Composable
+fun EntityTypeList(viewModel: EntityTypeListViewModel) {
+    val entityTypes by viewModel.entityTypes.collectAsStateWithLifecycle()
+    Column {
+        entityTypes.map { EntityTypeItem(entityType = it) }
+    }
+}
+
+@Composable
+fun EntityTypeItem(entityType: EntityType) {
+    Text(text = entityType.name )
+}
+
+

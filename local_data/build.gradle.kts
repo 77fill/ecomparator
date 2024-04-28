@@ -47,4 +47,6 @@ dependencies {
     ksp(libs.androidx.room.compiler)
 
     implementation(project(":user_interactor"))
+
+    implementation("androidx.room:room-ktx:2.6.1")
 }

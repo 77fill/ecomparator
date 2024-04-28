@@ -16,13 +16,15 @@ import androidx.room.PrimaryKey
             entity = QuantityType::class,
             parentColumns = arrayOf("name"),
             childColumns = arrayOf("quantity_type_name"))
+    ),
+    primaryKeys = arrayOf(
+        "entity_type_name",
+        "quantity_type_name"
     )
 )
 data class EntityTypeQuantityType(
-    @PrimaryKey
     @ColumnInfo(name = "entity_type_name")
     val entityTypeName: String,
-    @PrimaryKey
     @ColumnInfo(name = "quantity_type_name")
     val quantityTypeName: String
 )
