@@ -24,6 +24,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.currentRecomposeScope
@@ -78,9 +79,11 @@ fun EntityTypeList(entityTypes: List<EntityType>) {
     Column(
         Modifier
             .fillMaxWidth()
-            .padding(top = 10.dp),
+            .padding(top = 10.dp)
+            .background(MaterialTheme.colorScheme.surface),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Text(text = "Entity Types", style = Typography.titleLarge)
         entityTypes.map {
             EntityTypeItem(entityType = it, Modifier.padding(top = 5.dp))
         }
@@ -90,13 +93,19 @@ fun EntityTypeList(entityTypes: List<EntityType>) {
 @Composable
 fun EntityTypeItem(entityType: EntityType, modifier: Modifier = Modifier) {
     Button(onClick = {}, modifier.fillMaxWidth(0.95f)) {
-        Row(modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min),
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .height(IntrinsicSize.Min),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start,
         ) {
-           Text(text = entityType.name, style = Typography.titleLarge)
+           Text(text = entityType.name, style = Typography.titleMedium)
 
-            Divider(Modifier.padding(start = 10.dp).width(1.dp).height(20.dp))
+            Divider(
+                Modifier
+                    .padding(start = 10.dp)
+                    .width(1.dp)
+                    .height(20.dp))
 
             Text(
                 text = entityType.quantityTypes.joinToString(", "),
