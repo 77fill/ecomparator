@@ -23,26 +23,27 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import dev.pschmalz.ecomparator.ui.theme.EntityComparatorTheme
 import dev.pschmalz.ecomparator.ui.theme.Typography
 import dev.pschmalz.ecomparator.user_interactor.data.EntityType
 import dev.pschmalz.ecomparator.viewmodels.EntityTypeListViewModel
 
 @Composable
-fun EntityTypesScreen() {
+fun EntityTypesScreen(navController: NavController) {
     val entityTypeListViewModel = EntityTypeListViewModel()
 
     EntityComparatorTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
             val entityTypes by entityTypeListViewModel.entityTypes.collectAsStateWithLifecycle()
 
-            EntityTypeList(entityTypes)
+            EntityTypeList(entityTypes, navController)
         }
     }
 }
 
 @Composable
-fun EntityTypeList(entityTypes: List<EntityType>) {
+fun EntityTypeList(entityTypes: List<EntityType>, navController: NavController? = null) {
     Column(
         Modifier
             .fillMaxWidth()
@@ -52,14 +53,14 @@ fun EntityTypeList(entityTypes: List<EntityType>) {
     ) {
         Text(text = "Entity Types", style = Typography.titleLarge)
         entityTypes.map {
-            EntityTypeItem(entityType = it, Modifier.padding(top = 5.dp))
+            EntityTypeItem(entityType = it, Modifier.padding(top = 5.dp), navController = navController)
         }
     }
 }
 
 @Composable
-fun EntityTypeItem(entityType: EntityType, modifier: Modifier = Modifier) {
-    Button(onClick = {}, modifier.fillMaxWidth(0.95f)) {
+fun EntityTypeItem(entityType: EntityType, modifier: Modifier = Modifier, navController: NavController?) {
+    Button(onClick = {navController?.navigate(Route.EntitiesScreen.path)}, modifier.fillMaxWidth(0.95f)) {
         Row(modifier = Modifier
             .fillMaxWidth()
             .height(IntrinsicSize.Min),
